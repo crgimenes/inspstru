@@ -1,0 +1,2 @@
+# inspstru
+Inspect struct
