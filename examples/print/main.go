@@ -31,5 +31,6 @@ func main() {
 		Scores: []int{100, 98, 95},
 	}
 
-	inspstru.PrintElements(p)
+	// Print the struct with ANSI colors
+	inspstru.PrintElements(p, true)
 }
