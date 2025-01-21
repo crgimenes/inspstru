@@ -8,6 +8,7 @@ import (
 	"strings"
 )
 
+// Element represents a single element in the structure
 type Element struct {
 	Path  string
 	Type  string
@@ -22,6 +23,7 @@ const (
 	ANSI_WHITE  = "\x1b[37m"
 )
 
+// CollectElements recursively collects all elements in the structure
 func CollectElements(obj interface{}, prefix string) []Element {
 	var elements []Element
 
@@ -71,6 +73,7 @@ func CollectElements(obj interface{}, prefix string) []Element {
 	return elements
 }
 
+// BuildTemplate recursively builds a template for the structure
 func BuildTemplate(obj interface{}, prefix string) string {
 	var result strings.Builder
 
@@ -104,7 +107,8 @@ func BuildTemplate(obj interface{}, prefix string) string {
 	return result.String()
 }
 
-func PrintElements(obj interface{}) {
+// PrintElements prints all elements in the structure
+func PrintElements(obj interface{}, useANSI bool) {
 	r := CollectElements(obj, "")
 
 	sort.Slice(r, func(i, j int) bool {
@@ -112,14 +116,22 @@ func PrintElements(obj interface{}) {
 	})
 
 	for _, e := range r {
-		fmt.Printf("%s%s%s (%s) = %s%s%s\n",
-			ANSI_CYAN,
-			e.Path,
-			ANSI_GREEN,
-			e.Type,
-			ANSI_YELLOW,
-			e.Value,
-			ANSI_RESET,
-		)
+		if useANSI {
+			fmt.Printf("%s%s%s (%s) = %s%s%s\n",
+				ANSI_CYAN,
+				e.Path,
+				ANSI_GREEN,
+				e.Type,
+				ANSI_YELLOW,
+				e.Value,
+				ANSI_RESET,
+			)
+		} else {
+			fmt.Printf("%s (%s) = %s\n",
+				e.Path,
+				e.Type,
+				e.Value,
+			)
+		}
 	}
 }
