@@ -24,7 +24,7 @@ const (
 )
 
 // CollectElements recursively collects all elements in the structure
-func CollectElements(obj interface{}, prefix string) []Element {
+func CollectElements(obj any, prefix string) []Element {
 	var elements []Element
 
 	adjustPrefix := func(base, field string) string {
@@ -74,7 +74,7 @@ func CollectElements(obj interface{}, prefix string) []Element {
 }
 
 // BuildTemplate recursively builds a template for the structure
-func BuildTemplate(obj interface{}, prefix string) string {
+func BuildTemplate(obj any, prefix string) string {
 	var result strings.Builder
 
 	v := reflect.ValueOf(obj)
@@ -108,7 +108,7 @@ func BuildTemplate(obj interface{}, prefix string) string {
 }
 
 // PrintElements prints all elements in the structure
-func PrintElements(obj interface{}, useANSI bool) {
+func PrintElements(obj any, useANSI bool) {
 	r := CollectElements(obj, "")
 
 	sort.Slice(r, func(i, j int) bool {
